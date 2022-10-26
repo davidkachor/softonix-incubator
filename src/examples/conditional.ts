@@ -5,20 +5,18 @@ interface IMessageOptions {
   center?: string
 }
 
-function showMessage<T extends string | IMessageOptions> (
-  message: T,
-  ...options: (T extends string ? [Omit<IMessageOptions, 'message'>] : [])
-) {
+function showMessage () {
   console.log(message, options)
 }
-// showMessage('some message', {
-//   duration: 5000
-// })
 
-// showMessage({
-//   message: 'some message',
-//   duration: 5000
-// })
+/* OUTPUT showMessage('some message', {
+  duration: 5000
+})
+
+showMessage({
+  message: 'some message',
+  duration: 5000
+}) */
 
 export {
   showMessage

@@ -23,16 +23,16 @@ class Address {
   }
 }
 
-async function getAddresses (): Promise<Address> {
+async function getAddresses () {
   const { json } = await fetch('wadresse/list')
-  return (await json()).map((address: IAddressRaw) => new Address(address))
+  return (await json()).map((address) => new Address(address))
 }
 
-function addAddress (address: Address) {
+function addAddress (address) {
   return fetch('wadresse/', { method: 'PUT', body: JSON.stringify(address) })
 }
 
-const concatAddress: Address['concat'] = () => {
+const concatAddress = () => {
   return {
     id: 1,
     address: 'some address'
