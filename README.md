@@ -27,3 +27,10 @@ but very important to understand. It shows how to work with classes, conditional
 - Tag2: `#section-3-typescript-end`
     - Represents finished exercises
 
+### Homework
+This section includes homework. You need to fork this repo, finish homework in your repo, push your changes to origin and send URL with your forked repo and completed task to related person.
+
+- [Homework exercise1](https://github.com/Softonix/softonix-incubator/blob/section-3-typescript/src/homework/exercise-1.ts)
+- [Homework exercise2](https://github.com/Softonix/softonix-incubator/blob/section-3-typescript/src/homework/exercise-2.ts)
+- [Homework exercise3](https://github.com/Softonix/softonix-incubator/blob/section-3-typescript/src/homework/exercise-3.ts)
+- [Homework exercise4](https://github.com/Softonix/softonix-incubator/blob/section-3-typescript/src/homework/exercise-4.ts)
