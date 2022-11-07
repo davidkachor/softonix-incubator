@@ -1,7 +1,5 @@
 <template>
-  <div class="p-4 text-black">Hello World!</div>
+  <div class="max-w-[1440px] mx-auto p-6">
+    <RouterView />
+  </div>
 </template>
-
-<script lang="ts" setup>
-// YOUR CODE HERE
-</script>

@@ -3,17 +3,17 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-import AutoImport from 'unplugin-auto-import/vite'
+/* import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers' */
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => ({
+export default defineConfig(() => ({
   plugins: [
-    vue(),
+    vue()
 
     /* CONFIGURATION FOR SCRIPTS AUTO-IMPORT */
-    AutoImport({
+    /*     AutoImport({
       dts: command === 'serve' && './dts/auto-imports.d.ts',
 
       dirs: [
@@ -32,17 +32,17 @@ export default defineConfig(({ command }) => ({
         'vue-i18n'
       ],
       resolvers: [ElementPlusResolver()]
-    }),
+    }), */
 
     /* CONFIGURATION FOR COMPONENTS AUTO-IMPORT */
-    Components({
+    /*     Components({
       dts: command === 'serve' && './dts/components.d.ts',
       dirs: [
         'src/components',
         'src/plugins/portal'
       ],
       resolvers: [ElementPlusResolver({ importStyle: false })]
-    })
+    }) */
   ],
 
   resolve: {
