@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { routeNames } from './routeNames'
 
-import Contacts from '@/pages/Contacts.vue'
-import UpsertContact from '@/pages/UpsertContact.vue'
+import Contacts from '@/views/Contacts.vue'
+import UpsertContact from '@/views/UpsertContact.vue'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
