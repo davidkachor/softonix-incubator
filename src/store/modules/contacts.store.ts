@@ -1,5 +1,3 @@
-import type { IContact } from '@/types'
-
 export const useContactsStore = defineStore('contactsStore', () => {
   const contacts = ref<IContact[]>([
     {

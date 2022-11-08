@@ -1,7 +1,6 @@
 import 'vue-router'
-import { routeNames } from '@/router/routeNames'
-import { EPortalNames } from '@/plugins'
-import { EComponentSize, EComponentType } from '@/types'
+import { routeNames } from '@/router/route-names'
+import { globalProperties } from '@/plugins'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -10,8 +9,10 @@ declare module 'vue-router' {
 }
 
 declare module '@vue/runtime-core' {
-  export interface ComponentCustomProperties {
+  interface ComponentCustomProperties {
     // todo: Here you define you global vue definitions.
     $routeNames: typeof routeNames
   }
 }
+
+export { }

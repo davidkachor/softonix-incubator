@@ -1,1 +1,1 @@
-export * from './vue-global-prototypes.plugin'
+export * from './vue-global-properties.plugin'

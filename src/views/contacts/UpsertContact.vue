@@ -33,8 +33,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { IContact } from '@/types'
-
 const { $routeNames } = useGlobalProperties()
 const router = useRouter()
 const route = useRoute()

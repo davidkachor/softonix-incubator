@@ -86,8 +86,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { IContact } from '@/types'
-
 const props = defineProps<{
   contact: IContact
 }>()
