@@ -5,7 +5,19 @@ function sum (a, b) { return a + b } // for test
 
 // eslint-disable-next-line
 function memoize (fn) {
-  // fn ваш код тут...
+  const cache = {}
+  return (...args) => {
+    const property = args.toString()
+    if (cache[property]) {
+      // console.log(`результат ${cache[property]}` + ', відбулось повторне виконання, результат повернуто з кешу без виклику додавання')
+      return cache[property]
+    } else {
+      const result = fn(...args)
+      cache[property] = result
+      // console.log(`результат ${result}`)
+      return result
+    }
+  }
 }
 
 // приклад виконання вашого коду
