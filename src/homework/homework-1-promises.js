@@ -19,7 +19,7 @@ let promise = Promise.resolve()
 for (const num of array) {
   promise = promise
     .then(() => arrayHandler(num))
-    // .then(data => console.log(`Спосіб 1: ${data}`))
+    // .then(data => console.log(`Method 1: ${data}`))
 }
 
 // method 2
@@ -27,11 +27,14 @@ for (const num of array) {
   try {
     for (const num of array) {
       await arrayHandler(num)
-      // .then(data => console.log(`Спосіб 2: ${data}`))
+      // .then(data => console.log(`Method 2: ${data}`))
     }
   } catch (error) {
     console.log(error)
   }
 })()
+
+// method 3
+Promise.all(array.map(num => arrayHandler(num).then(data => console.log(`Method 3: ${data}`))))
 
 console.log(array)
