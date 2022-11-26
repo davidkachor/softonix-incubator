@@ -51,11 +51,11 @@ connect a reactivity to our data, add some interaction to the page and many more
 This section includes homework. You need to fork this repo, finish homework in your repo, push your changes to origin and send URL with your forked repo and completed task to related person.
 
 - Implement contact validation during editMode
-- If either name or description field is disabled, you should not be able to save a contact. Save button should be greyed out and not clickable.
+  - If either name or description field are not filled in, you should not be able to save a contact. Save button should be greyed out and not clickable.
 - Implement contact creation.
-- Add ‘Add contact’ button next to the page title.
-- By clicking on the ‘Add contact’ button the new empty contact card should be inserted at the beginning of the list.
-- The new contact form should include name, description and image fields.
-- By clicking on a cancel button during a contact creation, it should be removed from the list.
-- Validation should work for both creating and editing a contact
+  - Add ‘Add contact’ button next to the page title.
+  - By clicking on the ‘Add contact’ button the new empty contact card should be inserted at the beginning of the list.
+  - The new contact form should include name, description and image fields.
+  - By clicking on a cancel button during a contact creation, it should be removed from the list.
+  - Validation should work for both creating and editing a contact
 
