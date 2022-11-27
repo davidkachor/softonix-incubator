@@ -1,8 +1,23 @@
 <template>
   <div class="max-w-[1440px] p-6">
-    <h3 class="font-medium m-0">Contact list</h3>
+    <div class="flex flex-row gap-10">
+      <h3 class="font-medium m-0">Contact list</h3>
+      <button
+        class="text-blue-500 font-medium cursor-pointer hover:underline"
+        @click="formOpen = true"
+      >
+        Add contact
+      </button>
+    </div>
 
     <div class="contact-list grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
+      <ContactItem
+        v-if="formOpen"
+        is-new
+        :contact="{description: '', name: '', image: '', id: 0}"
+        @cancel="onCancel"
+        @create="onContactCreate"
+      />
       <ContactItem
         v-for="(contact, index) in contacts"
         :key="contact.id"
@@ -18,6 +33,8 @@
 import { ref } from 'vue'
 import type { IContact } from '@/types'
 import ContactItem from '@/components/ContactItem.vue'
+
+const formOpen = ref(false)
 
 const contacts = ref<IContact[]>([
   {
@@ -46,5 +63,14 @@ function deleteContact (index: number) {
 
 function onContactSave (contact: IContact, index: number) {
   contacts.value[index] = { ...contact }
+}
+
+function onContactCreate (item: Omit<IContact, 'id'>) {
+  formOpen.value = false
+  const id = Math.floor(Math.random() * 100000000000)
+  contacts.value.unshift({ ...item, id })
+}
+function onCancel () {
+  formOpen.value = false
 }
 </script>
