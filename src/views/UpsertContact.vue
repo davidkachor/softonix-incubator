@@ -35,6 +35,7 @@
 <script lang="ts" setup>
 import { reactive, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useContactsStore } from '@/store'
 import type { IContact } from '@/types'
 
@@ -45,9 +46,12 @@ import Card from '@/components/Card.vue'
 
 const router = useRouter()
 const route = useRoute()
-const { contacts, addContact, updateContact, deleteContact } = useContactsStore()
 
-const currentContact = computed(() => contacts.find(c => c.id === +route.params.contactId))
+const contactsStore = useContactsStore()
+const { contacts } = storeToRefs(contactsStore)
+const { addContact, updateContact, deleteContact } = contactsStore
+
+const currentContact = computed(() => contacts.value.find(c => c.id === +route.params.contactId))
 
 const cardTitle = computed(() => {
   return currentContact.value ? 'Edit Contact' : 'New Contact'
@@ -56,7 +60,7 @@ const cardTitle = computed(() => {
 const contactForm = reactive<IContact>(currentContact.value
   ? { ...currentContact.value }
   : {
-    id: contacts.length + 1,
+    id: contacts.value.length + 1,
     name: '',
     description: '',
     image: ''

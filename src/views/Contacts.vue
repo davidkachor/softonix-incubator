@@ -24,13 +24,18 @@
 </template>
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useContactsStore } from '@/store'
+
 import ContactItem from '@/components/ContactItem.vue'
 import AppButton from '@/components/AppButton.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 
 const router = useRouter()
-const { contacts, updateContact, deleteContact } = useContactsStore()
+
+const contactsStore = useContactsStore()
+const { contacts } = storeToRefs(contactsStore)
+const { updateContact, deleteContact } = contactsStore
 
 function createNewContact () {
   router.push({ name: 'upsertContact', params: { contactId: 'new' } })

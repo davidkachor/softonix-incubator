@@ -1,7 +1,5 @@
 import 'vue-router'
 import { routeNames } from '@/router'
-import { EPortalNames } from '@/plugins'
-import { EComponentSize, EComponentType } from '@/types'
 
 declare module 'vue-router' {
   interface RouteMeta {

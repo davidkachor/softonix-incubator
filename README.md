@@ -15,7 +15,7 @@ like slots and custom v-model. We will also see how to connect vue-router for ap
 - Connect pinia for state managing
 - Rewrite logic using state manager
 - App improvements
-- **Home Work**: Create a simple todo app.
+- **Home Work**: Implement filtering and sorting of the contacts
 
 ### Materials for the section
 - **Read**: [Events with v-model](https://vuejs.org/guide/components/events.html#usage-with-v-model)
@@ -26,7 +26,7 @@ like slots and custom v-model. We will also see how to connect vue-router for ap
 - **Practice**: Read all the sections above and try them on your own
 
 ### Video Material
-[Youtube link](TBA)
+[Youtube link](https://youtu.be/K8VNAF72Xc4)
 
 ### Section Playground
 - Branch name: [`section-6-vue-part-2`](https://github.com/Softonix/softonix-incubator/tree/section-6-vue-part-2)
