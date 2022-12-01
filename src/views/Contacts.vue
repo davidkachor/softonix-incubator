@@ -8,6 +8,8 @@
       </template>
       Add Contact
     </AppButton>
+
+    <FilterSortFrom />
   </div>
 
   <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
@@ -30,6 +32,7 @@ import { useContactsStore } from '@/store'
 import ContactItem from '@/components/ContactItem.vue'
 import AppButton from '@/components/AppButton.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
+import FilterSortFrom from '@/components/FilterSortForm.vue'
 
 const router = useRouter()
 

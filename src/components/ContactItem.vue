@@ -9,11 +9,13 @@
             type="text"
             class="block font-medium w-full"
           >
+          <input v-model="localContact.role" type="text" class="block mt-1 text-gray w-full">
           <input v-model="localContact.description" type="text" class="block mt-1 text-gray w-full">
         </template>
 
         <template v-else>
           <p class="font-medium cursor-text">{{ contact.name }}</p>
+          <p class="text-gray font-bold cursor-text mt-1 truncate">{{ contact.role }}</p>
           <p class="text-gray cursor-text mt-1 truncate">
             {{ contact.description }}
           </p>
@@ -103,7 +105,8 @@ const inputRef = ref<HTMLInputElement>()
 const localContact = ref<Omit<IContact, 'id'>>({
   name: '',
   description: '',
-  image: ''
+  image: '',
+  role: ''
 })
 
 const nameAbbrv = computed(() => {
