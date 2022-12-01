@@ -10,3 +10,9 @@ export interface IOption {
   label: string
   value: string | number
 }
+
+export interface ISearchParams {
+  sort: ['asc' | 'dsc' | 'def']
+  roles: string[]
+  search: ''
+}

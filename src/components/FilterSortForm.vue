@@ -1,6 +1,6 @@
 <template>
-  <form class="flex gap-3" @submit.prevent="onSubmit">
-    <AppInput placeholder="Search" />
+  <div class="flex gap-3">
+    <SearchForm v-model="searchParams.search" />
     <AppDropdown
       v-model="searchParams.roles"
       :options="roleOptionList"
@@ -8,23 +8,20 @@
       :is-multi="true"
     />
     <AppDropdown v-model="searchParams.sort" :options="sortingList" placeholder="Sort by" />
-    <AppButton>
-      <template #icon>
-        <IconGlass class="w-4 h-4" fill="white" />
-      </template>
-      Search
-    </AppButton>
-  </form>
+  </div>
 </template>
 
 <script setup lang="ts">
-import AppInput from '@/components/AppInput.vue'
-import AppButton from '@/components/AppButton.vue'
-import IconGlass from '@/components/icons/IconGlass.vue'
 import AppDropdown from '@/components/AppDropdown.vue'
+import SearchForm from '@/components/SearchForm.vue'
 
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive } from 'vue'
 import { useContactsStore } from '@/store/modules/contacts.store'
+import type { ISearchParams } from '@/types'
+
+const props = defineProps<{
+  modelValue?: ISearchParams
+}>()
 
 const sortingList = ref([
   { value: 'def', label: 'Default' },
@@ -35,13 +32,10 @@ const sortingList = ref([
 const store = useContactsStore()
 const { roleOptionList } = store
 
-const searchParams = reactive({
+const searchParams = reactive<ISearchParams>(props.modelValue || {
   sort: ['def'],
-  roles: []
+  roles: [],
+  search: ''
 })
-
-function onSubmit () {
-  console.log(searchParams)
-}
 
 </script>

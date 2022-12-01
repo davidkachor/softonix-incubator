@@ -88,6 +88,7 @@ function onSelect (option: IOption) {
 
 function onRemove (value: number | string) {
   selectedOptions.value = selectedOptions.value.filter(e => e.value !== value)
+  emit('update:modelValue', selectedOptions.value.map(e => e.value))
 }
 
 </script>
