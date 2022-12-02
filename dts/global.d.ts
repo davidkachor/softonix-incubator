@@ -1,6 +1,5 @@
 import 'vue-router'
-import { routeNames } from '@/router/route-names'
-import { globalProperties } from '@/plugins'
+import { routeNames } from '@/router'
 
 declare module 'vue-router' {
   interface RouteMeta {

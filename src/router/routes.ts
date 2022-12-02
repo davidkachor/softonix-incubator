@@ -1,17 +1,11 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-import { routeNames } from './route-names'
-import { contactsRoutes } from '@/views/contacts/contacts.routes'
+import { contactRouteNames, contactsRoutes } from '@/views/contacts/contacts.routes'
 
-export const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: '/'
-  },
+export const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: routeNames.rootPage,
-    redirect: { name: routeNames.contacts }
+    redirect: { name: contactRouteNames.contacts }
   },
 
   ...contactsRoutes

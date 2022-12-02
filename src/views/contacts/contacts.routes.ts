@@ -1,34 +1,31 @@
 import type { RouteRecordRaw } from 'vue-router'
+
 import Contacts from '@/views/contacts/Contacts.vue'
 import UpsertContact from '@/views/contacts/UpsertContact.vue'
 
-const contactsRoutesNames = {
+export const contactRouteNames = {
   contacts: 'contacts',
   upsertContact: 'upsertContact'
 }
 
-const contactsRoutes: Array<RouteRecordRaw> = [
+export const contactsRoutes: RouteRecordRaw[] = [
   {
     path: '/contacts',
-    name: contactsRoutesNames.contacts,
+    name: contactRouteNames.contacts,
     component: Contacts
   },
   {
     path: '/contacts/:contactId',
-    name: contactsRoutesNames.upsertContact,
+    name: contactRouteNames.upsertContact,
     component: UpsertContact,
     beforeEnter (to, from, next) {
-      const { contacts } = useContactsStore()
-      if (to.params.contactId === 'new' || contacts.find(c => c.id === +to.params.contactId)) {
+      const contactsStore = useContactsStore()
+      const { contacts } = storeToRefs(contactsStore)
+      if (to.params.contactId === 'new' || contacts.value.find(c => c.id === +to.params.contactId)) {
         next()
       } else {
-        next({ name: contactsRoutesNames.contacts })
+        next({ name: 'contacts' })
       }
     }
   }
 ]
-
-export {
-  contactsRoutesNames,
-  contactsRoutes
-}

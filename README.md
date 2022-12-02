@@ -1,25 +1,37 @@
 # Section #7 - Vue.js part 3
 
 ### Goal
-TBA
+The purpose of this section is to introduce you a Softonix guidelines that are used for every project 
+and refactor a current state of the 'contacts' app by using them.
 
 
 ### Tech plan
-- TBA
-- **Home Work**: TBA
+- Look through Softonix guidelines repo
+- Explain folders structure and file names patterns
+- Explain the workflow with router using predefined routes names
+- Introduce auto-imports
+- Refactor contacts application using Softonix guidelines.
 
 ### Materials for the section
-- **Read**: TBA
+- **Read**: Look through [Softonix guidelines](https://github.com/Softonix/frontend-guidelines)
+- **Read**: [Vue composables](https://vuejs.org/guide/reusability/composables.html#composables)
+- **Read**: [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import)
+- **Read**: [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components)
+- **Look through**: [Vueuse library](https://vueuse.org/)
+- **Look through**: [Vite bundler](https://vitejs.dev/)
+
+### Note
+- Please install exact version 0.11.2 of unplugin-auto-import during viewing the video material to make autoimports properly work
 
 ### Video Material
-[Youtube link](TBA)
+[Youtube link](https://youtu.be/j1Um1sW9c58)
 
 ### Section Playground
 - Branch name: [`section-7-vue-part-3`](https://github.com/Softonix/softonix-incubator/tree/section-7-vue-part-3)
 - Tag1: `#section-7-vue-part-3-start`
-  - TBA
+  - Represents an application from previous lecture #6
 - Tag2: `#section-7-vue-part-3-end`
-  - TBA
+  - Represents refactored application using Softonix guidelines
 
 ### Homework
 This section includes homework. You need to fork this repo, finish homework in your repo, push your changes to origin and send URL with your forked repo and completed task to related person.
@@ -28,7 +40,7 @@ Main idea of the task is to group job openings items (coming from `jobOpeningsSe
 
 
 ### Finished task video overview
-[Youtube link](TBA)
+[Youtube link](https://youtu.be/m_S8UrGM-Hs)
 
 ### Details
 - Use _homework folder to get needed data
