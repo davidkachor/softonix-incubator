@@ -6,6 +6,8 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
   const jobOpeningStore = shallowRef<IJobOpening[]>(jobOpenings)
   const departmentStore = shallowRef<IDepartment[]>(departments)
 
+  const departmentFilter = ref<string[]>([])
+
   const departmentsWithJobOpenings = computed<IDepartmentWithJobOpenings[]>(() => {
     const list = departmentStore.value
       .reduce((acc, curr) =>
@@ -33,8 +35,6 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
 
     return [...Object.values(list), other].sort((a, b) => a.name.localeCompare(b.name))
   })
-
-  const departmentFilter = ref<string[]>([])
 
   const filteredDepaetments = computed<IDepartmentWithJobOpenings[]>(() => {
     return departmentsWithJobOpenings.value.filter(item => {

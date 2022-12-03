@@ -14,7 +14,7 @@
         <a class="text-blue-800 hover:underline" :href="job.url">{{ job.title }}</a>
       </li>
       <button
-        v-if="!showMore && item.jobOpenings.length > 5 && showAll"
+        v-if="showButton"
         class="text-blue-800 font-bold hover:underline"
         @click="showMore = true"
       >
@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import type { IDepartmentWithJobOpenings } from '../job-openings.types'
+
 const props = defineProps<{
   item: IDepartmentWithJobOpenings
 }>()
@@ -34,14 +35,13 @@ const showMore = ref(false)
 const showAll = ref(true)
 
 const jobOpenings = computed(() => {
-  if (props.item.jobOpenings.length <= 5) {
-    return props.item.jobOpenings
-  }
   if (!showMore.value) {
     return props.item.jobOpenings.slice(0, 5)
   }
   return props.item.jobOpenings
 })
+
+const showButton = computed(() => !showMore.value && props.item.jobOpenings.length > 5 && showAll.value)
 
 function toggleShowAll () {
   showAll.value = !showAll.value

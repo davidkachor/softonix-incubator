@@ -10,9 +10,8 @@
 
 <script setup lang="ts">
 const { filtered, jobOpeningStore, departmentsOptions } = useJobOpeningsStore()
-const openedAmount = computed(() => {
-  return filtered.filter.length === 0
-    ? jobOpeningStore.length
-    : `${filtered.amount} out of ${jobOpeningStore.length}`
-})
+
+const openedAmount = computed(() => filtered.filter.length === 0
+  ? jobOpeningStore.length
+  : `${filtered.amount} out of ${jobOpeningStore.length}`)
 </script>
