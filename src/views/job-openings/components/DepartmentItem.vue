@@ -5,7 +5,7 @@
       <h2 class="font-bold">{{ item.name }} ({{ item.jobOpenings.length }})</h2>
     </button>
 
-    <ul v-if="showAll">
+    <ul v-show="showAll">
       <li v-for="job of jobOpenings" :key="job.id" class="flex gap-2 items-center">
         <span
           :class="{'bg-red-600': job.isClosed, 'bg-green-600 ': !job.isClosed}"
