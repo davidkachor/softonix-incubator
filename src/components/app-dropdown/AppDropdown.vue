@@ -7,20 +7,7 @@
   >
     <span v-if="showPlaceholder" class="text-gray-medium ml-1">{{ placeholder }}</span>
 
-    <div v-else-if="multiple" class="inline-flex gap-1 flex-wrap overflow-x-auto">
-      <div
-        v-for="item in selectedOptions"
-        :key="item.value"
-        class="bg-blue-500 hover:bg-blue-700 font-bold text-white rounded-md p-1 flex items-center gap-2
-        "
-        @click.stop="onRemove(item.value)"
-      >
-        <span class="overflow-ellipsis overflow-hidden whitespace-nowrap">
-          {{ item.label }}
-        </span>
-        <IconCloseCross class="w-3.5 h-3.5" fill="white" />
-      </div>
-    </div>
+    <AppDropdownSelectedItems v-else-if="multiple" :selected-options="selectedOptions" @remove="onRemove" />
 
     <div v-else>
       <span class="ml-1">{{ selectedOptions[0].label }}</span>
@@ -30,13 +17,15 @@
       <IconArrow :class="{'w-4 h-4 transition': true, 'rotate-180': optionsShow}" />
     </div>
 
-    <AppDropdownList
-      v-show="optionsShow"
-      :selected-options="selectedOptions"
-      :options="options"
-      @remove="onRemove"
-      @select="onSelect"
-    />
+    <Transition name="options">
+      <AppDropdownList
+        v-show="optionsShow"
+        :selected-options="selectedOptions"
+        :options="options"
+        @remove="onRemove"
+        @select="onSelect"
+      />
+    </Transition>
   </div>
 </template>
 
@@ -85,3 +74,18 @@ function onRemove (value: TOptionValue) {
   emit('update:modelValue', selectedOptions.value.map(e => e.value))
 }
 </script>
+
+<style scoped>
+  .options-enter-active,
+  .options-leave-active {
+    transition: .1s ease-in transform, .1s ease-in  opacity;
+  }
+
+  .options-enter-from {
+    opacity: 0;
+  }
+  .options-leave-to {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+</style>
