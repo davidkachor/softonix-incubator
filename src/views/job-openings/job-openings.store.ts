@@ -6,6 +6,8 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
   const jobOpeningStore = shallowRef<IJobOpening[]>(jobOpenings)
   const departmentStore = shallowRef<IDepartment[]>(departments)
 
+  const departmentsFilter = ref<string[]>([])
+
   const sortedJobOpenings = computed<IDepartmentWithJobOpenings[]>(() => {
     const list = departmentStore.value
       .reduce((acc, curr) =>
@@ -28,12 +30,29 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
       }
     }
 
-    return [...Object.values(list), other].sort((a, b) => a.name.localeCompare(b.name))
+    return [...Object.values(list), other].filter(item => {
+      if (item.jobOpenings.length === 0) return false
+      if (departmentsFilter.value.length === 0) return true
+      return departmentsFilter.value.includes(item.value)
+    }).sort((a, b) => a.name.localeCompare(b.name))
   })
+
+  const amountOfFiltered = computed(() =>
+    sortedJobOpenings.value.reduce((acc, curr) => acc + curr.jobOpenings.length, 0))
 
   const departmentsOptions = computed<IOption[]>(() => {
-    return [...departmentStore.value.map(e => ({ value: e.value, label: e.name })), { label: 'Other', value: 'other' }]
+    return sortedJobOpenings.value.map(e => ({ label: e.name, value: e.value }))
   })
 
-  return { jobOpeningStore, departmentsStore: departmentStore, departmentsOptions, sortedJobOpenings }
+  return {
+    jobOpeningStore,
+    departmentStore,
+    departmentsOptions,
+    sortedJobOpenings,
+    filtered: reactive({
+      filter: departmentsFilter,
+      list: sortedJobOpenings,
+      amount: amountOfFiltered
+    })
+  }
 })
