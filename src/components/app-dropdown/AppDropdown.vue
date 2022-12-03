@@ -5,16 +5,20 @@
     cursor-pointer  bg-white flex items-center justify-between gap-3"
     @click="optionsShow = !optionsShow"
   >
-    <span v-if="showPlaceholder" class="text-gray-medium ml-1">{{ placeholder }}</span>
-
-    <AppDropdownSelectedItems v-else-if="multiple" :selected-options="selectedOptions" @remove="onRemove" />
+    <AppDropdownSelectedItems
+      v-if="multiple"
+      :placeholder="placeholder"
+      :selected-options="selectedOptions"
+      @remove="onRemove"
+    />
 
     <div v-else>
-      <span class="ml-1">{{ selectedOptions[0].label }}</span>
+      <span v-if="showPlaceholder" class="text-gray-medium ml-1">{{ placeholder }}</span>
+      <span v-else class="ml-1">{{ selectedOptions[0].label }}</span>
     </div>
 
     <div @click="optionsShow === !optionsShow">
-      <IconArrow :class="{'w-4 h-4 transition': true, 'rotate-180': optionsShow}" />
+      <IconArrow :class="{'rotate-180': optionsShow}" class="w-4 h-4 transition" />
     </div>
 
     <Transition name="options">
@@ -81,11 +85,8 @@ function onRemove (value: TOptionValue) {
     transition: .1s ease-in transform, .1s ease-in  opacity;
   }
 
-  .options-enter-from {
-    opacity: 0;
-  }
+  .options-enter-from,
   .options-leave-to {
-    transform: scaleY(0);
-    transform-origin: top;
+    opacity: 0;
   }
 </style>

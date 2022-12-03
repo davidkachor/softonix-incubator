@@ -6,23 +6,24 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
   const jobOpeningStore = shallowRef<IJobOpening[]>(jobOpenings)
   const departmentStore = shallowRef<IDepartment[]>(departments)
 
-  const departmentsFilter = ref<string[]>([])
-
-  const sortedJobOpenings = computed<IDepartmentWithJobOpenings[]>(() => {
+  const departmentsWithJobOpenings = computed<IDepartmentWithJobOpenings[]>(() => {
     const list = departmentStore.value
       .reduce((acc, curr) =>
         ({ ...acc, [curr.value]: { ...curr, jobOpenings: [] } }), {} as Record<string, IDepartmentWithJobOpenings>
       )
+
     const other: IDepartmentWithJobOpenings = {
       name: 'Other',
       value: 'other',
       jobOpenings: []
     }
+
     for (const job of jobOpeningStore.value) {
       if (job.departments.length === 0) {
         other.jobOpenings.push(job)
         continue
       }
+
       for (const dep of job.departments) {
         if (list[dep]) {
           list[dep].jobOpenings.push(job)
@@ -30,29 +31,36 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
       }
     }
 
-    return [...Object.values(list), other].filter(item => {
+    return [...Object.values(list), other].sort((a, b) => a.name.localeCompare(b.name))
+  })
+
+  const departmentFilter = ref<string[]>([])
+
+  const filteredDepaetments = computed<IDepartmentWithJobOpenings[]>(() => {
+    return departmentsWithJobOpenings.value.filter(item => {
       if (item.jobOpenings.length === 0) return false
-      if (departmentsFilter.value.length === 0) return true
-      return departmentsFilter.value.includes(item.value)
-    }).sort((a, b) => a.name.localeCompare(b.name))
+      if (departmentFilter.value.length === 0) return true
+      return departmentFilter.value.includes(item.value)
+    })
   })
 
   const amountOfFiltered = computed(() =>
-    sortedJobOpenings.value.reduce((acc, curr) => acc + curr.jobOpenings.length, 0))
+    filteredDepaetments.value.reduce((acc, curr) => acc + curr.jobOpenings.length, 0))
 
   const departmentsOptions = computed<IOption[]>(() => {
-    return sortedJobOpenings.value.map(e => ({ label: e.name, value: e.value }))
+    return filteredDepaetments.value.map(e => ({ label: e.name, value: e.value }))
   })
 
   return {
     jobOpeningStore,
     departmentStore,
     departmentsOptions,
-    sortedJobOpenings,
+    sortedJobOpenings: filteredDepaetments,
     filtered: reactive({
-      filter: departmentsFilter,
-      list: sortedJobOpenings,
+      filter: departmentFilter,
+      list: filteredDepaetments,
       amount: amountOfFiltered
-    })
+    }),
+    departmentsWithJobOpenings
   }
 })

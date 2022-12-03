@@ -1,5 +1,6 @@
 <template>
   <div class="inline-flex gap-1 flex-wrap">
+    <span v-show="selectedOptions.length === 0" class="text-gray-medium ml-1 p-1">{{ placeholder }}</span>
     <TransitionGroup name="items">
       <div
         v-for="item in selectedOptions"
@@ -20,6 +21,7 @@
 <script setup lang="ts">
 defineProps<{
   selectedOptions: IOption[]
+  placeholder: string
 }>()
 defineEmits<{
   (e: 'remove', value: TOptionValue): void
@@ -28,8 +30,12 @@ defineEmits<{
 
 <style scoped>
 .items-enter-active,
-.items-leave-active {
+.items-leave-active
+ {
   @apply transition;
+}
+.items-move {
+  transition: .3s ease-in-out all;
 }
 .items-enter-from,
 .items-leave-to {

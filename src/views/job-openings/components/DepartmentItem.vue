@@ -1,6 +1,6 @@
 <template>
-  <article v-if="item.jobOpenings.length !== 0">
-    <button class="flex items-center gap-1" @click="toggleShowAll">
+  <article>
+    <button class="flex items-center gap-2" @click="toggleShowAll">
       <IconArrow :class="{'rotate-180': showAll}" class="w-3 h-3 transition" />
       <h2 class="font-bold">{{ item.name }} ({{ item.jobOpenings.length }})</h2>
     </button>
