@@ -6,7 +6,12 @@
     </button>
 
     <ul v-show="showAll">
-      <li v-for="job of jobOpenings" :key="job.id" class="flex gap-2 items-center">
+      <li
+        v-for="(job, index) of item.jobOpenings"
+        v-show="showMore || index < 5"
+        :key="job.id"
+        class="flex gap-2 items-center"
+      >
         <span
           :class="{'bg-red-600': job.isClosed, 'bg-green-600 ': !job.isClosed}"
           class="min-w-[10px] h-[10px] rounded-full"
@@ -25,21 +30,14 @@
 </template>
 
 <script setup lang="ts">
-import type { IDepartmentWithJobOpenings } from '../job-openings.types'
+import type { IDepWithJobs } from '../job-openings.types'
 
 const props = defineProps<{
-  item: IDepartmentWithJobOpenings
+  item: IDepWithJobs
 }>()
 
 const showMore = ref(false)
 const showAll = ref(true)
-
-const jobOpenings = computed(() => {
-  if (!showMore.value) {
-    return props.item.jobOpenings.slice(0, 5)
-  }
-  return props.item.jobOpenings
-})
 
 const showButton = computed(() => !showMore.value && props.item.jobOpenings.length > 5 && showAll.value)
 
