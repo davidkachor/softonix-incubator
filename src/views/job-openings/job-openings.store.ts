@@ -1,73 +1,66 @@
-import { jobOpenings, type IJobOpening } from '@/_homework/job-openings'
-import { type IDepartment, departments } from '@/_homework/departments'
-import type { IDepartmentWithJobOpenings } from './job-openings.types'
+import { jobOpenings } from '@/_homework/job-openings'
+import { departments } from '@/_homework/departments'
+import type { TDepWithJobsList } from './job-openings.types'
 
 export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
-  const jobOpeningStore = shallowRef<IJobOpening[]>(jobOpenings)
-  const departmentStore = shallowRef<IDepartment[]>(departments)
+  const store = ref<TDepWithJobsList>(createStore())
 
-  const departmentFilter = ref<string[]>([])
+  const filters = ref<string[]>([])
 
-  const departmentsWithJobOpenings = computed<IDepartmentWithJobOpenings[]>(() => {
-    const list = departmentStore.value
-      .reduce((acc, curr) =>
-        ({ ...acc, [curr.value]: { ...curr, jobOpenings: [] } }), {} as Record<string, IDepartmentWithJobOpenings>
-      )
+  const depOptions = computed(() => {
+    const options: IOption[] = []
 
-    const other: IDepartmentWithJobOpenings = {
-      name: 'Other',
-      value: 'other',
-      jobOpenings: []
+    for (const dep in store.value) {
+      if (store.value[dep].show) options.push({ label: store.value[dep].name, value: dep })
     }
 
-    for (const job of jobOpeningStore.value) {
-      if (job.departments.length === 0) {
-        other.jobOpenings.push(job)
-        continue
-      }
-
-      for (const dep of job.departments) {
-        if (list[dep]) {
-          list[dep].jobOpenings.push(job)
-        }
-      }
-    }
-
-    return [...Object.values(list), other].sort((a, b) => a.name.localeCompare(b.name))
+    return options
   })
 
-  const filteredDepartments = computed<IDepartmentWithJobOpenings[]>(() => {
-    return departmentsWithJobOpenings.value.filter(item => {
-      if (item.jobOpenings.length === 0) return false
-      if (departmentFilter.value.length === 0) return true
-      return departmentFilter.value.includes(item.value)
-    })
-  })
+  const filteredStore = computed(() => {
+    if (filters.value.length === 0) return store.value
 
-  const filteredJobAmount = computed(() => {
-    return Object.keys(filteredDepartments.value.reduce((acc, curr) => {
-      for (const item of curr.jobOpenings) {
-        if (acc[item.id]) {
-          acc[item.id]++
-        } else acc[item.id] = 0
-      }
+    return Object.keys(store.value).reduce((acc, curr) => {
+      if (filters.value.includes(curr)) return { ...acc, [curr]: store.value[curr] }
       return acc
-    }, {} as Record<string, number>)).length
+    }, {} as TDepWithJobsList)
   })
 
-  const departmentsOptions = computed<IOption[]>(() => {
-    return filteredDepartments.value.map(e => ({ label: e.name, value: e.value }))
-  })
+  function createStore (): TDepWithJobsList {
+    console.log('created')
+    const sorted = departments.sort((a, b) => a.name.localeCompare(b.name))
+
+    const refactored = sorted.reduce((acc, curr) => {
+      if (!acc[curr.value]) acc[curr.value] = { name: curr.name, show: false, jobOpenings: [] }
+      return acc
+    }, {} as TDepWithJobsList)
+
+    refactored.other = {
+      name: 'Other',
+      jobOpenings: [],
+      show: false
+    }
+
+    for (const job of jobOpenings) {
+      if (job.departments.length === 0) {
+        refactored.other.jobOpenings.push(job)
+        refactored.other.show = true
+      } else {
+        job.departments.forEach(dep => {
+          if (refactored[dep]) {
+            refactored[dep].jobOpenings.push(job)
+            refactored[dep].show = true
+          }
+        })
+      }
+    }
+
+    return refactored
+  }
 
   return {
-    jobOpeningStore,
-    departmentStore,
-    departmentsOptions,
-    filtered: reactive({
-      filter: departmentFilter,
-      list: filteredDepartments,
-      amount: filteredJobAmount
-    }),
-    departmentsWithJobOpenings
+    jobs: filteredStore,
+    filters,
+    depOptions
   }
 })
