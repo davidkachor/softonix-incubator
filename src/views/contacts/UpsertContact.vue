@@ -33,12 +33,16 @@
 </template>
 
 <script lang="ts" setup>
-const { $routeNames } = useGlobalProperties()
 const router = useRouter()
 const route = useRoute()
-const { contacts, addContact, updateContact, deleteContact } = useContactsStore()
 
-const currentContact = computed(() => contacts.find(c => c.id === +route.params.contactId))
+const { $routeNames } = useGlobalProperties()
+
+const contactsStore = useContactsStore()
+const { contacts } = storeToRefs(contactsStore)
+const { addContact, updateContact, deleteContact } = contactsStore
+
+const currentContact = computed(() => contacts.value.find(c => c.id === +route.params.contactId))
 
 const cardTitle = computed(() => {
   return currentContact.value ? 'Edit Contact' : 'New Contact'
@@ -47,7 +51,7 @@ const cardTitle = computed(() => {
 const contactForm = reactive<IContact>(currentContact.value
   ? { ...currentContact.value }
   : {
-    id: contacts.length + 1,
+    id: contacts.value.length + 1,
     name: '',
     description: '',
     image: ''

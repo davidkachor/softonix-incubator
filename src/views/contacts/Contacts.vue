@@ -31,10 +31,12 @@
   </div>
 </template>
 <script lang="ts" setup>
+const router = useRouter()
 const { $routeNames } = useGlobalProperties()
 
-const router = useRouter()
-const { contacts, updateContact, deleteContact } = useContactsStore()
+const contactsStore = useContactsStore()
+const { contacts } = storeToRefs(contactsStore)
+const { updateContact, deleteContact } = contactsStore
 
 function createNewContact () {
   router.push({ name: $routeNames.upsertContact, params: { contactId: 'new' } })
