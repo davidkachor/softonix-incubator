@@ -45,18 +45,21 @@ export const useJobOpeningsStore = defineStore('jobOpeningsStore', () => {
   })
 
   const filteredJobAmount = computed(() => {
-    return Object.keys(filteredDepartments.value.reduce((acc, curr) => {
-      for (const item of curr.jobOpenings) {
-        if (acc[item.id]) {
-          acc[item.id]++
-        } else acc[item.id] = 0
-      }
-      return acc
-    }, {} as Record<string, number>)).length
+    const allJobs: IJobOpening[] = []
+
+    filteredDepartments.value.forEach(dep => {
+      allJobs.push(...dep.jobOpenings)
+    })
+
+    return [...new Set(allJobs)].length
   })
 
   const departmentsOptions = computed<IOption[]>(() => {
-    return filteredDepartments.value.map(e => ({ label: e.name, value: e.value }))
+    return departmentsWithJobOpenings.value.reduce(
+      (acc, curr) =>
+        curr.jobOpenings.length === 0 ? acc : [...acc, { value: curr.value, label: curr.name }],
+      [] as IOption[]
+    )
   })
 
   return {
