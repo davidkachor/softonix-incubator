@@ -1,7 +1,7 @@
 <template>
   <h1 class="font-bold text-[30px] mb-3">Job Openings</h1>
   <h3 class="mb-3">Departmets:</h3>
-  <AppDropdown v-model="selected" :options="depOptions" multiple />
+  <AppDropdown v-model="filter" :options="depOptions" multiple />
   <p class="my-3">
     Showing <strong>{{ openedAmount }}</strong> job openings
   </p>
@@ -9,12 +9,11 @@
 </template>
 
 <script setup lang="ts">
-const { selected, depOptions } = storeToRefs(useJobOpeningsStore())
+const { filter, maxAmount, actualAmount, depOptions } = storeToRefs(useJobOpeningsStore())
 
 const openedAmount = computed(() => {
-  // filtered.filter.length === 0
-  // ? jobOpeningStore.length
-  // : `${filtered.amount} out of ${jobOpeningStore.length}`
-  return 0
+  return filter.value.length === 0
+    ? maxAmount.value
+    : `${actualAmount.value} out of ${maxAmount.value}`
 })
 </script>
