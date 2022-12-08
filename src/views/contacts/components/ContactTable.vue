@@ -70,7 +70,9 @@
 
 <script setup lang="ts">
 
-defineEmits(['edit'])
+defineEmits<{
+  (t: 'edit', id: number): void
+}>()
 
 const contactsStore = useContactsStore()
 const { contacts } = storeToRefs(contactsStore)
@@ -84,10 +86,11 @@ const tableData = computed(() => {
 
 const { deleteContact, updateContact } = contactsStore
 
-const localContact = ref <Record<number, Omit<IContact, 'id'>>>({})
+const localContact = ref<Record<number, Omit<IContact, 'id'>>>({})
 
 function saveContact (id: number) {
   updateContact({ ...localContact.value[id], id })
+  localContact.value = {}
 }
 
 function toggleEditButton (contact: IContactTableRow) {
