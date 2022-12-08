@@ -16,9 +16,14 @@
     >
       Logout
     </el-button>
+
+    <el-tabs v-model="activeTab">
+      <el-tab-pane label="Card" name="card" />
+      <el-tab-pane label="Table" name="table" />
+    </el-tabs>
   </div>
 
-  <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
+  <div v-if="activeTab === 'card'" class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
     <ContactItem
       v-for="contact in contacts"
       :key="contact.id"
@@ -29,7 +34,10 @@
       @save="updateContact"
     />
   </div>
+
+  <ContactTable v-else @edit="editContact" />
 </template>
+
 <script lang="ts" setup>
 const router = useRouter()
 const { $routeNames } = useGlobalProperties()
@@ -37,6 +45,8 @@ const { $routeNames } = useGlobalProperties()
 const contactsStore = useContactsStore()
 const { contacts } = storeToRefs(contactsStore)
 const { updateContact, deleteContact } = contactsStore
+
+const activeTab = ref<'card' | 'table'>('table')
 
 function createNewContact () {
   router.push({ name: $routeNames.upsertContact, params: { contactId: 'new' } })

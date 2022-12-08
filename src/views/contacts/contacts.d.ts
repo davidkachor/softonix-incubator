@@ -4,3 +4,8 @@ interface IContact {
   description: string
   image?: string
 }
+
+interface IContactTableRow extends IContact {
+  editMode: boolean
+  imageHasError: boolean
+}

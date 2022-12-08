@@ -1,15 +1,15 @@
 <template>
-  <Card>
+  <el-card shadow="hover">
     <div class="flex">
-      <div class="flex-grow text-sm truncate" @click.stop>
+      <div class="flex-grow flex flex-col text-sm truncate" @click.stop>
         <template v-if="editMode">
-          <input
+          <el-input
             ref="inputRef"
             v-model="localContact.name"
             type="text"
             class="block font-medium w-full"
-          >
-          <input v-model="localContact.description" type="text" class="block mt-1 text-gray w-full">
+          />
+          <el-input v-model="localContact.description" type="text" class="block mt-1 text-gray w-full" />
         </template>
 
         <template v-else>
@@ -43,49 +43,60 @@
 
     <div class="flex justify-end mt-2 gap-2">
       <template v-if="editMode">
-        <span
-          class="text-blue-500 font-medium text-xs cursor-pointer hover:underline"
+        <el-button
+          :type="$elComponentType.danger"
+          plain
           @click.stop="editMode = false"
-        >Cancel</span>
+        >
+          Cancel
+        </el-button>
 
-        <span
-          class="text-blue-500 font-medium text-xs cursor-pointer hover:underline"
+        <el-button
+          :type="$elComponentType.success"
+          plain
           @click.stop="onSave"
-        >Save</span>
+        >
+          Save
+        </el-button>
       </template>
 
       <template v-else>
-        <span
-          class="text-blue-500 font-medium text-xs cursor-pointer hover:underline"
+        <el-button
+          plain
           @click.stop="triggerEditMode"
-        >Edit</span>
+        >
+          Edit
+        </el-button>
 
-        <span
-          class="text-red-500 font-medium text-xs cursor-pointer hover:underline"
+        <el-button
+          :type="$elComponentType.danger"
+          plain
           @click.stop="$emit('delete', contact)"
-        >Delete</span>
+        >
+          Delete
+        </el-button>
       </template>
     </div>
 
-    <template #footer>
-      <div class="flex text-sm font-medium text-gray-dark border-t border-gray-ultra-light" @click.stop>
-        <div class="flex items-center justify-center flex-1 py-4 cursor-pointer hover:text-gray">
-          <IconEnvelope />
-          <span class="ml-3">Email</span>
-        </div>
-        <div
-          class="flex items-center justify-center flex-1 py-4 border-l
-            border-gray-ultra-light cursor-pointer hover:text-gray"
-        >
-          <IconPhone />
-          <span class="ml-3">Call</span>
-        </div>
-      </div>
-    </template>
-  </Card>
+    <div class="flex text-sm font-medium pt-2 mt-2 text-gray-dark border-t border-gray-ultra-light" @click.stop>
+      <el-button
+        class="flex flex-auto" :icon="Message"
+      >
+        Email
+      </el-button>
+      <el-button
+        :icon="Phone"
+        class="flex flex-auto"
+      >
+        Call
+      </el-button>
+    </div>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
+import { Message, Phone } from '@element-plus/icons-vue'
+
 const props = defineProps<{
   contact: IContact
 }>()
