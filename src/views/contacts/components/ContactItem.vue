@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card v-loading="pending">
     <div class="flex">
       <div class="flex-grow text-sm truncate" @click.stop>
         <template v-if="editMode">
@@ -25,19 +25,9 @@
       border border-gray-medium bg-gray-ultra-light"
       >
         <span
-          v-if="imageHasError || !contact.image"
           class="font-medium uppercase"
         >{{ nameAbbrv }}
         </span>
-
-        <img
-          v-else
-          class="object-cover"
-          src="https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-          alt="contact-logo"
-          @error="imageHasError = true"
-          @load="imageHasError = false"
-        >
       </div>
     </div>
 
@@ -62,7 +52,7 @@
 
         <span
           class="text-red-500 font-medium text-xs cursor-pointer hover:underline"
-          @click.stop="$emit('delete', contact)"
+          @click.stop="onDelete"
         >Delete</span>
       </template>
     </div>
@@ -90,14 +80,15 @@ const props = defineProps<{
   contact: IContact
 }>()
 
-const emit = defineEmits(['delete', 'save'])
+const { deleteContact, updateContact } = useContactsStore()
 
 const inputRef = ref<HTMLInputElement>()
 
+const pending = ref(false)
+
 const localContact = ref<Omit<IContact, 'id'>>({
   name: '',
-  description: '',
-  image: ''
+  description: ''
 })
 
 const nameAbbrv = computed(() => {
@@ -118,10 +109,16 @@ async function triggerEditMode () {
   inputRef.value?.focus()
 }
 
-function onSave () {
-  emit('save', localContact.value)
-  editMode.value = false
+async function onDelete () {
+  pending.value = true
+  await deleteContact(props.contact)
+  pending.value = false
 }
 
-const imageHasError = ref(false)
+async function onSave () {
+  pending.value = true
+  await updateContact({ ...localContact.value, id: props.contact.id })
+  pending.value = false
+  editMode.value = false
+}
 </script>

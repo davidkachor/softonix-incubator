@@ -22,7 +22,10 @@ instance.interceptors.request.use(
 )
 
 instance.interceptors.response.use(
-  res => res.data,
+  res => {
+    console.log(res.data)
+    return res.data
+  },
   error => {
     console.log(error)
 

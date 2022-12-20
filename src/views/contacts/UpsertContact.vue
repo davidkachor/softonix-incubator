@@ -1,12 +1,10 @@
 <template>
   <div class="flex justify-center">
-    <Card :title="cardTitle" class="w-[350px]">
+    <Card v-loading="pending" :title="cardTitle" class="w-[350px]">
       <div class="space-y-4">
         <AppInput v-model.trim="contactForm.name" placeholder="Name" />
 
         <AppInput v-model.trim="contactForm.description" placeholder="Description" />
-
-        <AppInput v-model.trim="contactForm.image" placeholder="Image Link" />
       </div>
 
       <template #footer>
@@ -36,7 +34,10 @@
 const router = useRouter()
 const route = useRoute()
 const { $routeNames } = useGlobalProperties()
-const { contacts, addContact, updateContact, deleteContact } = useContactsStore()
+
+const contactsStore = useContactsStore()
+const { pending } = storeToRefs(contactsStore)
+const { contacts, addContact, updateContact, deleteContact } = contactsStore
 
 const currentContact = computed(() => contacts.find(c => c.id === +route.params.contactId))
 
@@ -49,13 +50,11 @@ const contactForm = reactive<IContact>(currentContact.value
   : {
     id: contacts.length + 1,
     name: '',
-    description: '',
-    image: ''
+    description: ''
   })
 
 const isFormValid = computed(() => {
-  const { image, ...contact } = contactForm
-  return Object.values(contact).every(c => !!c)
+  return Object.values(contactForm).every(c => !!c)
 })
 
 function onDelete () {
@@ -63,11 +62,11 @@ function onDelete () {
   router.replace({ name: $routeNames.contacts })
 }
 
-function onSave () {
+async function onSave () {
   if (currentContact.value) {
-    updateContact(contactForm)
+    await updateContact(contactForm)
   } else {
-    addContact(contactForm)
+    await addContact(contactForm)
   }
   router.push({ name: $routeNames.contacts })
 }

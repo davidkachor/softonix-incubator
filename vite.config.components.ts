@@ -24,7 +24,8 @@ function buildViewsComponents () {
       const dirs = readdirSync(dirName, { withFileTypes: true }).filter(dirent => dirent.isDirectory())
       dirs.forEach((dir) => {
         const dirPath = pathJoin(dirName, dir.name)
-        if (dirPath.includes('/components')) {
+        const path = dirPath.split('\\')
+        if (path.includes('components')) {
           console.log(dirPath)
           componentsDirs.push(dirPath)
         }

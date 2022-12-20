@@ -15,6 +15,14 @@ export const useAuthStore = defineStore('authStore', () => {
       })
   }
 
+  function register (payload: ILoginRequest) {
+    return authService.register(payload)
+      .then(res => {
+        console.log(res)
+        setToken(res.access_token)
+      })
+  }
+
   function logout () {
     localStorage.removeItem('si-token')
     window.location.href = router.resolve(routeNames.login).href
@@ -23,6 +31,7 @@ export const useAuthStore = defineStore('authStore', () => {
   return {
     accessToken,
     login,
+    register,
     logout
   }
 })
