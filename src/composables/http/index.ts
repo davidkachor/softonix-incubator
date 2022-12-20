@@ -26,11 +26,11 @@ instance.interceptors.response.use(
     return res.data
   },
   async error => {
-    try {
-      console.log(error)
-      const { refreshToken, setRefreshToken, setToken } = useAuthStore()
+    console.log(error)
+    const { refreshToken, setRefreshToken, setToken, logout } = useAuthStore()
 
-      if (error.response.status === 401 && !error.config._isRetried && refreshToken) {
+    if (error.response.status === 401 && !error.config._isRetried && refreshToken) {
+      try {
         error.config._isRetried = true
         const res = await authService.refreshToken(refreshToken)
 
@@ -43,17 +43,16 @@ instance.interceptors.response.use(
         }
 
         return instance(error.config)
-      }
-
-      const { logout } = useAuthStore()
-      if (error.response.status === 401) {
+      } catch {
         logout()
       }
-
-      return Promise.reject(error)
-    } catch {
-      return Promise.reject(error)
     }
+
+    if (error.response.status === 401) {
+      logout()
+    }
+
+    return Promise.reject(error)
   }
 )
 
