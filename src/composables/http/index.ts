@@ -9,12 +9,12 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    const { accessToken } = useAuthStore()
+    const { accessToken } = storeToRefs(useAuthStore())
 
     if (accessToken) {
       config.headers = {
         ...config.headers,
-        authorization: `Bearer ${accessToken}`
+        authorization: `Bearer ${accessToken.value}`
       }
     }
     return config
@@ -23,18 +23,37 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   res => {
-    console.log(res.data)
     return res.data
   },
-  error => {
-    console.log(error)
+  async error => {
+    try {
+      console.log(error)
+      const { refreshToken, setRefreshToken, setToken } = useAuthStore()
 
-    const { logout } = useAuthStore()
-    if (error.response.status === 401) {
-      logout()
+      if (error.response.status === 401 && !error.config._isRetried && refreshToken) {
+        error.config._isRetried = true
+        const res = await authService.refreshToken(refreshToken)
+
+        setToken(res.access_token)
+        setRefreshToken(res.refresh_token)
+
+        error.config.headers = {
+          ...error.config.headers,
+          authorization: `Bearer ${res.access_token}`
+        }
+
+        return instance(error.config)
+      }
+
+      const { logout } = useAuthStore()
+      if (error.response.status === 401) {
+        logout()
+      }
+
+      return Promise.reject(error)
+    } catch {
+      return Promise.reject(error)
     }
-
-    return Promise.reject(error)
   }
 )
 
