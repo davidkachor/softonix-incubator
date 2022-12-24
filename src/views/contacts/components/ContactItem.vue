@@ -30,14 +30,14 @@
         >{{ nameAbbrv }}
         </span>
 
-        <img
+        <LazyImage
           v-else
           class="object-cover"
-          src="https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+          :src="contact.image || ''"
           alt="contact-logo"
           @error="imageHasError = true"
           @load="imageHasError = false"
-        >
+        />
       </div>
     </div>
 

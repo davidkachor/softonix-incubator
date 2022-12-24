@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     IconEnvelope: typeof import('./../src/components/icons/IconEnvelope.vue')['default']
     IconPhone: typeof import('./../src/components/icons/IconPhone.vue')['default']
     IconPlus: typeof import('./../src/components/icons/IconPlus.vue')['default']
+    LazyImage: typeof import('./../src/components/LazyImage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
