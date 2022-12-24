@@ -1,6 +1,4 @@
 import type { RouteRecordRaw } from 'vue-router'
-import Contacts from '@/views/contacts/Contacts.vue'
-import UpsertContact from '@/views/contacts/UpsertContact.vue'
 
 const contactsRoutesNames = {
   contacts: 'contacts',
@@ -11,7 +9,7 @@ const contactsRoutes: Array<RouteRecordRaw> = [
   {
     path: '/contacts',
     name: contactsRoutesNames.contacts,
-    component: Contacts,
+    component: () => import('@/views/contacts/Contacts.vue'),
     meta: {
       isProtected: true
     }
@@ -19,7 +17,7 @@ const contactsRoutes: Array<RouteRecordRaw> = [
   {
     path: '/contacts/:contactId',
     name: contactsRoutesNames.upsertContact,
-    component: UpsertContact,
+    component: () => import('@/views/contacts/UpsertContact.vue'),
     meta: {
       isProtected: true
     },

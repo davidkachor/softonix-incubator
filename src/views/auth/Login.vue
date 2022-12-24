@@ -20,18 +20,7 @@
           <el-input v-model="formModel.password" type="password" />
         </el-form-item>
 
-        <p>
-          Have an account already?
-          <router-link
-            class="text-blue-500 underline"
-            :to="{ name: $routeNames.register }"
-          >
-            Register
-          </router-link>
-          here!
-        </p>
-
-        <el-button native-type="submit" type="primary">
+        <el-button native-type="submit" :type="$elComponentType.primary">
           Login
         </el-button>
       </el-form>

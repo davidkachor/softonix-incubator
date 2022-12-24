@@ -1,6 +1,8 @@
 import 'vue-router'
 import { routeNames } from '@/router'
 import { globalProperties } from '@/plugins'
+import type { EpPropFinalized, EpPropMergeType } from 'element-plus/es/utils'
+
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -14,8 +16,8 @@ declare module '@vue/runtime-core' {
     // todo: Here you define you global vue definitions.
     $routeNames: typeof routeNames
 
-    $elComponentSize: typeof globalProperties.$elComponentSize
-    $elComponentType: typeof globalProperties.$elComponentType
+    $elComponentSize: Record<keyof typeof globalProperties.$elComponentSize, EpPropMergeType<StringConstructor, keyof typeof globalProperties.$elComponentSize>>
+    $elComponentType: Record<keyof typeof globalProperties.$elComponentType, EpPropFinalized<StringConstructor, keyof typeof globalProperties.$elComponentType>>
   }
 }
 
