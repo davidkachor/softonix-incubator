@@ -11,25 +11,20 @@ export const useContactsStore = defineStore('contactsStore', () => {
       description: 'World',
       image: 'https://picsum.photos/200'
     }, {
-      id: 2,
-      name: 'Hello',
-      description: 'World',
-      image: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80'
-    }, {
       id: 3,
       name: 'Hello',
       description: 'World',
-      image: 'https://picsum.photos/200'
+      image: 'https://picsum.photos/80'
     }, {
       id: 4,
       name: 'Hello',
       description: 'World',
-      image: 'https://picsum.photos/200'
+      image: 'https://picsum.photos/100'
     }, {
       id: 5,
       name: 'Hello',
       description: 'World',
-      image: 'https://picsum.photos/200'
+      image: 'https://picsum.photos/150'
     }, {
       id: 6,
       name: 'Hello',
@@ -39,28 +34,28 @@ export const useContactsStore = defineStore('contactsStore', () => {
       id: 7,
       name: 'Hello',
       description: 'World',
-      image: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80'
+      image: 'https://picsum.photos/250'
     },
     {
       id: 8,
       name: 'Hello',
       description: 'World',
-      image: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80'
+      image: 'https://picsum.photos/300'
     }, {
       id: 9,
       name: 'Hello',
       description: 'World',
-      image: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80'
+      image: 'https://picsum.photos/350'
     }, {
       id: 10,
       name: 'Hello',
       description: 'World',
-      image: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80'
+      image: 'https://picsum.photos/400'
     }, {
       id: 11,
       name: 'Hello',
       description: 'World',
-      image: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80'
+      image: 'https://picsum.photos/450'
     }, {
       id: 12,
       name: 'Hello',
