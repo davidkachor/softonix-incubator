@@ -1,6 +1,7 @@
 /* Реалізуйте дженерік версію методу масивів Array.push.
 Для перевірки наведіть курсор на pushCheck */
 
-type TPush<T, U> = any // Code here
+type TPush<T extends any[], U> = [...T, U] // Code here
 
-const pushCheck: TPush<[1, 2], '3'> = [] // [1, 2, '3']
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const pushCheck: TPush<[1, 2], '3'> = [1, 2, '3'] // [1, 2, '3']

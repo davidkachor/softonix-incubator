@@ -1,4 +1,3 @@
-
 /*
   Опишіть тип TPerson на основі IUser та IAdmin та використовуйте це в масиві persons і функції logPerson,
   щоб виправити всі помилки TS.
@@ -16,9 +15,9 @@ interface IAdmin {
   role: string
 }
 
-type TPerson = unknown
+type TPerson = IUser |IAdmin
 
-const persons: IUser[] /* <- замінити на IPerson[] */ = [
+const persons: TPerson[] /* <- замінити на IPerson[] */ = [
   {
     name: 'Max Mustermann',
     age: 25,
