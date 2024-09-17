@@ -15,10 +15,13 @@ const persons: IPerson[] = [
   { id: 6, name: 'Oleg', age: 20, hobbies: ['test', 'test1'] }
 ]
 
-function groupBy<
-  T extends Record<PropertyKey, any>,
-  K extends { [K in keyof T]: T[K] extends PropertyKey ? K : never}[keyof T]>
-(arr: T[], field: K) {
+type TGetValidKeys<T extends object> = keyof {
+  [key in keyof T as T[key] extends PropertyKey ? key : never]: T[key]
+}
+
+// type t = TGetValidKeys<IPerson>
+
+function groupBy<T extends Record<PropertyKey, any>> (arr: T[], field: TGetValidKeys<T>) {
   return arr.reduce((acc, cur) => {
     (acc[cur[field]] = acc[cur[field]] || []).push(cur)
     return acc

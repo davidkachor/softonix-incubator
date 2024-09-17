@@ -8,17 +8,21 @@ interface ISearchFilter {
 
 function getSearchFilters () {
   const ls = localStorage.getItem('SEARCH_FILTERS')
-  const filters = JSON.parse(ls ?? '{}') as ISearchFilter
-  return filters
+  const filters: unknown = JSON.parse(ls ?? '[]')
+
+  if (Array.isArray(filters) && filters.every(f => 'age' in f && Array.isArray(f.age))) {
+    return filters
+  }
+
+  return []
 }
 
-function setSearchFilters (data: ISearchFilter) {
+function setSearchFilters (data: ISearchFilter[]) {
   localStorage.setItem('SEARCH_FILTERS', JSON.stringify(data))
 }
 
 const filters = getSearchFilters()
 
-filters.age = [20, 21, 23]
-filters.occupation = ['IT specialist']
+filters.push({ age: [20, 21, 23], occupation: ['IT specialist'] })
 
 setSearchFilters(filters)

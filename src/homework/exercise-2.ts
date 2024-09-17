@@ -15,7 +15,7 @@ interface IAdmin {
   role: string
 }
 
-type TPerson = IUser |IAdmin
+type TPerson = IUser | IAdmin
 
 const persons: TPerson[] /* <- замінити на IPerson[] */ = [
   {
@@ -40,7 +40,7 @@ const persons: TPerson[] /* <- замінити на IPerson[] */ = [
   }
 ]
 
-function logPerson (user: IUser) {
+function logPerson (user: TPerson) {
   console.log(` - ${user.name}, ${user.age}`)
 }
 

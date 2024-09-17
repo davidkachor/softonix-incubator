@@ -15,10 +15,21 @@
     Приклад виконання дивіться нижче
 */
 
+// enum EAddTypes {
+//   append = 'append',
+//   prepend = 'prepend'
+// }
+
+// type TAddType = keyof typeof EAddTypes
+
 interface IUser {
   id: number
   name: string
 }
+
+type TInsertionType = 'append' | 'prepend'
+
+type TPredicateCallback<T> = (el: T) => boolean
 
 class Collection<T> {
   private elements: T[] = []
@@ -27,25 +38,30 @@ class Collection<T> {
     this.elements = elements
   }
 
-  get () {
+  get (): T[] {
     return this.elements
   }
 
-  add (el: T, type: 'append' | 'prepend' = 'append') {
+  add (el: T, type: TInsertionType = 'append') {
     if (type === 'append') {
       this.elements.push(el)
     } else {
       this.elements.unshift(el)
     }
+
+    // const method = type === 'append' ? 'push' : 'unshift'
+    // this.elements[method](el)
   }
 
-  contains (predicate: (el: T) => boolean) {
+  contains (predicate: TPredicateCallback<T>) {
     return this.elements.some(predicate)
   }
 
-  delete (predicate: (el: T) => boolean) {
-    const index = this.elements.findIndex(predicate)
-    this.elements.splice(index, 1)
+  delete (predicate: TPredicateCallback<T>) {
+    this.elements = this.elements.filter(el => !predicate(el))
+
+    // const index = this.elements.findIndex(predicate)
+    // this.elements.splice(index, 1)
   }
 }
 
